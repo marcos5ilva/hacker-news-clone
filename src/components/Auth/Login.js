@@ -1,5 +1,6 @@
 import React from "react";
 import userFormValidation from './useFormValidation';
+import validateLogin from './validateLogin';
 
 const INITIAL_STATE = {
   name: "",
@@ -8,29 +9,34 @@ const INITIAL_STATE = {
 }
 
 function Login(props) {
-  const {handleChange} = userFormValidation(INITIAL_STATE);
+  const {handleChange, handleSubmit, values} = userFormValidation(
+    INITIAL_STATE, validateLogin);
+    
   const [login, setLogin]= React.useState(false);
   
   return(
     <div>
       <h2 className="mv3">{login ? "Login" : "Create Account"}</h2>
-        <form className="fex flex-column">
+        <form onSubmit = {handleSubmit} className="fex flex-column">
           {!login &&<input 
             onChange = {handleChange}
             type="text"
             name="name"
+            value={values.name}
             placeholder="Your name"
           />}
           <input 
             onChange = {handleChange}
             type="email"
             name="email"
+            value={values.email}
             placeholder="Your email"
           />
           <input
             onChange = {handleChange} 
             type="password"
             name="password"
+            value={values.password}
             placeholder="Choose your password"
           />
           <div className="mt3">
